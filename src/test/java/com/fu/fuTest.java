@@ -23,11 +23,15 @@ import static org.apache.ibatis.io.Resources.getResourceAsStream;
  * @version: 1.0
  */
 public class fuTest {
+    //输入流
     public static InputStream resourceAsStream = null;
+    //sqlSession工厂
     public static SqlSessionFactory sqlSessionFactory = null;
     static {
         try {
+            //加载xml配置文件,获取输入流
             InputStream inputStream = Resources.getResourceAsStream("mybatis-config.xml");
+            //sql会话工厂生成器根据数据流创建sql会话工厂
             sqlSessionFactory =  new SqlSessionFactoryBuilder().build(inputStream);
         } catch (IOException e) {
             e.printStackTrace();
@@ -40,7 +44,9 @@ public class fuTest {
     public void showOrders() {
         SqlSession sqlSession = null;
         try {
+            //sql工厂打开会话
             sqlSession = sqlSessionFactory.openSession();
+            //获取order映射
             OrdersMapper orderMapper = sqlSession.getMapper(OrdersMapper.class);
             List<Orders> orders = orderMapper.showOrdersAndUser();
 
