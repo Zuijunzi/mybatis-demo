@@ -11,6 +11,7 @@
             <result column="total" property="total"/>
         </collection>
     </resultMap>
+    <!--查询所有用户与订单数据-->
     <select id="showUserAndOrders" resultMap="orderInfo">
         select user.*,orders.* from user left join orders on user.id = orders.uid
     </select>
