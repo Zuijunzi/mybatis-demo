@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fu.mapper.UserMapper">
+    <resultMap id="orderInfo" type="User">
+        <result property="id" column="id"/>
+        <collection property="orderLists" ofType="Orders">
+            <result column="id" property="id"/>
+            <result column="ordertime" property="ordertime"/>
+            <result column="total" property="total"/>
+        </collection>
+    </resultMap>
+    <select id="showUserAndOrders" resultMap="orderInfo">
+        select user.*,orders.* from user left join orders on user.id = orders.uid
+    </select>
+    <resultMap id="userAndRoleOrderInfo" type="User">
+        <result column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="birthday" property="birthday"/>
+        <collection property="roles" ofType="Role">
+            <result property="id" column="id"/>
+            <result property="rolename" column="rolename"/>
+        </collection>
+        <collection property="orders" ofType="Orders">
+            <result column="id" property="id"/>
+            <result column="ordertime" property="orderTime"/>
+            <result column="total" property="total"/>
+            <result column="uid" property="uid"/>
+        </collection>
+    </resultMap>
+    <select id="showUsersAndRoles" resultMap="userAndRoleOrderInfo">
+        select user.*,Role.*,orders.* from user left join user_role on user.id = user_role.user_id
+        join role on user_role.role_id = role.id join orders on user.id =orders.uid
+    </select>
+</mapper>

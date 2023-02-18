@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--下面这两行代码需要自己导入-->
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!-- 配置MyBatis运行环境 -->
+    <properties resource="db.properties"/>
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+    <typeAliases>
+        <typeAlias type="com.fu.entity.Orders" alias="orders"/>
+        <typeAlias type="com.fu.entity.User" alias="user"/>
+        <typeAlias type="com.fu.entity.Role" alias="role"/>
+    </typeAliases>
+    <!--    注意分页助手的插件，位置在mapperS之前    -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!-- 指定方言 -->
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+    <environments default="development">
+        <environment id="development">
+            <!-- 配置JDBC事务管理 -->
+            <transactionManager type="JDBC"></transactionManager>
+            <!-- POOLED配置JDBC数据源连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <!-- UserMapper.xml -->
+    <mappers>
+        <mapper resource="com/fu/mapper/UserMapper.xml"></mapper>
+        <mapper resource="com/fu/mapper/OrdersMapper.xml"></mapper>
+    </mappers>
+</configuration>

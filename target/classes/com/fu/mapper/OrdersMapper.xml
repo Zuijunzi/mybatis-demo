@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fu.mapper.OrdersMapper">
+    <!--<resultMap id="Orders" type="com.fu.entity.Orders">
+        <result column="id" property="user.id"/>
+        <result column="username" property="user.username"/>
+        <result column="password" property="user.password"/>
+        <result column="birthday" property="user.birthday"/>
+    </resultMap>-->
+    <resultMap id="Orders" type="orders">
+        <result property="id" column="id"/>
+        <result property="orderTime" column="ordertime"/>
+        <result property="total" column="total"/>
+        <!--注意，接下来就是要配置User对象了-->
+        <association property="user" javaType="User">
+            <result column="id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="birthday" property="birthday"/>
+        </association>
+    </resultMap>
+    <select id="showOrdersAndUser" resultMap="Orders">
+        select orders.*,user.* from orders,user where orders.uid = user.id
+    </select>
+</mapper>
