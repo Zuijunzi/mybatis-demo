@@ -11,5 +11,6 @@ import java.util.List;
  * @version: 1.0
  */
 public interface OrdersMapper {
+    //查询所有用户与订单
     public List<Orders> showOrdersAndUser();
 }
